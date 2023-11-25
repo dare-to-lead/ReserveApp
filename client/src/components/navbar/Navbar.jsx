@@ -16,7 +16,7 @@ const Navbar = () => {
           className="navbar-brand fw-bold fs-1"
           href="/"
           style={{ color: "rgb(202, 112, 7)" }}>
-          Reserve
+          RESERVE
         </a>
         <button
           className="navbar-toggler"

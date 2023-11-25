@@ -1,23 +1,22 @@
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import Navbar from "./components/navbar/Navbar";
-import HeroImage from "./components/HeroImage";
-import Cards from "./components/card/Cards";
-import ReviewCards from "./components/card/ReviewCards";
-import Footer from "./components/footer/Footer";
-// import TripFindingForm from "./components/form/TripFindingForm";
+
+import HomePage from "./pages/HomePage";
+import { useEffect } from "react";
+import { fetchData } from "./redux/actions/getApiFetch";
 
 function App() {
+  const data = useSelector((state) => state.data);
+  console.log("d", data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, []);
+  // console.log(response);
   return (
     <div className="App">
-      <div
-        className="w-100 h-100 d-flex "
-        style={{ backgroundColor: "rgb(202, 112, 7)" }}>
-        <HeroImage />
-        <Navbar />
-      </div>
-      <Cards />
-      <ReviewCards />
-      <Footer />
+      <HomePage />
     </div>
   );
 }

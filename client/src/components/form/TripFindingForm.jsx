@@ -16,7 +16,10 @@ const TripFindingForm = () => {
               className="form-control"
               type="text"
               aria-label="Text input with dropdown button"
-              style={{ backgroundColor: "rgb(152, 180, 187)" }}
+              style={{
+                backgroundColor: "rgb(152, 180, 187)",
+                borderTop: "3px solid rgb(202, 112, 7)",
+              }}
             />
             <button
               className="btn btn-outline-secondary dropdown-toggle"
@@ -57,7 +60,10 @@ const TripFindingForm = () => {
               type="text"
               className="form-control"
               aria-label="Text input with dropdown button"
-              style={{ backgroundColor: "rgb(152, 180, 187)" }}
+              style={{
+                backgroundColor: "rgb(152, 180, 187)",
+                borderTop: "3px solid rgb(202, 112, 7)",
+              }}
             />
             <button
               className="btn btn-outline-secondary dropdown-toggle"
@@ -98,7 +104,10 @@ const TripFindingForm = () => {
               type="text"
               className="form-control"
               aria-label="Text input with dropdown button"
-              style={{ backgroundColor: "rgb(152, 180, 187)" }}
+              style={{
+                backgroundColor: "rgb(152, 180, 187)",
+                borderTop: "3px solid rgb(202, 112, 7)",
+              }}
             />
             <button
               className="btn btn-outline-secondary dropdown-toggle"

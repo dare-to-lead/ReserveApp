@@ -7,9 +7,6 @@ const Footer = () => {
     <div className="container-fluid" style={{ backgroundColor: "#808000" }}>
       <div className="row px-4 pt-4 ">
         <div className="col text-white ">
-          <span className="material-icons self-center">
-            <i class="fa-solid fa-bus fs-5 text-warning mx-1"></i>
-          </span>
           <a className="fs-3 text-white fw-bold border border-0 text-decoration-none">
             RESERVE
           </a>
@@ -29,11 +26,11 @@ const Footer = () => {
             <div className="col ">
               <div className="text-left">
                 <ul className="list-item">
-                  <li className="list-group-item mb-2 text-white bg-transparent ">
+                  <li className="list-group-item mb-2 text-white bg-transparent border border-0 ">
                     About
                   </li>
 
-                  <li className="list-group-item mb-2 text-white bg-transparent">
+                  <li className="list-group-item mb-2 text-white bg-transparent border border-0">
                     Constact US
                   </li>
                 </ul>
@@ -41,16 +38,16 @@ const Footer = () => {
             </div>
             <div className="col mb-3 border-0 ">
               <ul className="list-item">
-                <li className="list-group-item mb-2 text-white bg-transparent">
+                <li className="list-group-item mb-2 text-white bg-transparent border border-0">
                   Careers
                 </li>
-                <li className="list-group-item mb-2 text-white bg-transparent">
+                <li className="list-group-item mb-2 text-white bg-transparent border border-0">
                   FAQ
                 </li>
-                <li className="list-group-item mb-2 text-white bg-transparent">
+                <li className="list-group-item mb-2 text-white bg-transparent border border-0">
                   T & C
                 </li>
-                <li className="list-group-item mb-2 text-white bg-transparent">
+                <li className="list-group-item mb-2 text-white bg-transparent border border-0">
                   Privacy Policy
                 </li>
               </ul>
