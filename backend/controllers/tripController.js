@@ -1,4 +1,5 @@
 // tripsController.js
+const BusDetails = require("../models/busDetailsModel");
 const Trips = require("../models/tripsModel");
 
 // const parsedStartTime = Date.parse(new Date(2023, 11, 3, 22, 30, 0, 0));
@@ -33,6 +34,8 @@ exports.createTrip = async (req, res) => {
 
 exports.getTrips = async (req, res) => {
   try {
+    const busDetail = await BusDetails.find();
+
     let query = { ...req.query };
 
     // Removing some fields for category
@@ -57,7 +60,7 @@ exports.getTrips = async (req, res) => {
     }
 
     const trips = await tripsQuery.exec();
-    res.status(200).json(trips);
+    res.status(200).json({ trip: trips, busdetail: busDetail });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

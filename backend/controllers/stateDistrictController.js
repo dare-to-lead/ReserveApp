@@ -9,3 +9,5 @@ exports.getAllDistricts = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+//const stateDistrict = await StateDistrict.findOne({ "districts._id": id }, { 'districts.$': 1 });
