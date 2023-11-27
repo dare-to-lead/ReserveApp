@@ -2,14 +2,14 @@
 const BusDetails = require("../models/busDetailsModel");
 const Trips = require("../models/tripsModel");
 
-// const parsedStartTime = Date.parse(new Date(2023, 11, 3, 22, 30, 0, 0));
-// console.log(parsedStartTime);
-
 //create or post a trip
 exports.createTrip = async (req, res) => {
   try {
     const { from, to, busDetails, startTime, endTime, seatBooked, busFare } =
       req.body;
+
+    const busDetail = await BusDetails.findOne({ _id: busDetails });
+    // busDetail.exec();
 
     const newTrip = new Trips({
       from,
@@ -19,6 +19,11 @@ exports.createTrip = async (req, res) => {
       endTime,
       seatBooked,
       busFare,
+      busOperator: busDetail ? busDetail.name : busDetail,
+      category: busDetail ? busDetail.category : busDetail,
+      totalSeats: busDetail ? busDetail.totalSeats : busDetail,
+      amenities: busDetail ? busDetail.animeties : busDetail,
+      rating: busDetail ? busDetail.rating : busDetail,
     });
 
     const savedTrip = await newTrip.save();
@@ -34,8 +39,6 @@ exports.createTrip = async (req, res) => {
 
 exports.getTrips = async (req, res) => {
   try {
-    const busDetail = await BusDetails.find();
-
     let query = { ...req.query };
 
     // Removing some fields for category
@@ -60,7 +63,7 @@ exports.getTrips = async (req, res) => {
     }
 
     const trips = await tripsQuery.exec();
-    res.status(200).json({ trip: trips, busdetail: busDetail });
+    res.status(200).json({ trips });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

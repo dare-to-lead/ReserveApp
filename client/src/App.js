@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage";
 import Filter from "./components/availableTrips/Filter";
 import { useEffect } from "react";
 import { fetchData } from "./redux/actions/getApiFetch";
@@ -17,8 +17,12 @@ function App() {
   // console.log(response);
   return (
     <div className="App">
-      {/* <HomePage /> */}
-      <Filter data={data} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/trips" element={<Filter data={data} />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

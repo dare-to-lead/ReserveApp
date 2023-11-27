@@ -1,5 +1,33 @@
 const Busdetails = require("../models/busDetailsModel");
 
+exports.createBusDetail = async (req, res) => {
+  try {
+    const {
+      name,
+      totalSeats,
+      category,
+      totalWindowSeatsAvailable,
+      rating,
+      animeties,
+    } = req.body;
+
+    const newbusdetail = new Busdetails({
+      name,
+      totalSeats,
+      category,
+      totalWindowSeatsAvailable,
+      rating,
+      animeties,
+    });
+
+    const savedBusdetail = await newbusdetail.save();
+
+    res.status(201).json(savedBusdetail);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 exports.getBusDetails = async (req, res) => {
   try {
     console.log(req.query);

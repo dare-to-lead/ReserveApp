@@ -1,17 +1,32 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { IconContext } from "react-icons/lib";
 import { MdOutlineStar } from "react-icons/md";
 
 const Filter = ({ data }) => {
-  async function getBusDetails(id) {
-    const detail = await fetch(`http://localhost:8080/redbus/busdetail/${id}`);
-    let response = detail.json();
-    let busdata = response;
-  }
+  // console.log(
+  //   "filterdata",
+  //   data?.data?.trips.map((trip) => {
+  //     return trip.busFare;
+  //   })
+  // );
+  const calculateDuration = (startTime, endTime) => {
+    const start = new Date(startTime);
+    const end = new Date(endTime);
 
-  useEffect(() => {
-    getBusDetails();
-  }, []);
+    // Calculate duration in milliseconds
+    const durationMs = end - start;
+
+    // Convert duration to hours and minutes
+    const hours = Math.floor(durationMs / (1000 * 60 * 60));
+    const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${hours} hrs ${minutes} min`;
+  };
+
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  };
 
   return (
     <div
@@ -20,7 +35,7 @@ const Filter = ({ data }) => {
       <div className="col-3 pt-4">
         <div>
           <button
-            className="mx-5 mb-4 bg-light"
+            className="mx-5 mt-4 py-2 bg-light rounded "
             style={{
               width: "15.8rem",
               border: "2px solid rgb(202, 112, 7)",
@@ -305,25 +320,67 @@ const Filter = ({ data }) => {
           </div>
         </div>
       </div>
-      <div classNameName="col-9">
-        <div class="card mt-5">
-          <div class="card-body">
-            <h5 class="card-title">
-              InterCity Smart Bus{" "}
-              <span className="mx-5 bg-success">
-                <IconContext.Provider value={{ color: "yellow" }}>
-                  <MdOutlineStar />
-                </IconContext.Provider>
+      <div className="col-9">
+        {data?.data?.trips?.map((trip) => (
+          <div class="card mt-5 mx-5" key={trip.id}>
+            <div
+              class="card-body rounded px-5"
+              style={{ border: "2px solid rgb(202, 112, 7)" }}>
+              <div className="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="card-title fw-bold text-warning pt-3">
+                    {trip.busOperator}
+                    <span className="mx-3 bg-success text-light fw-normal p-1 rounded">
+                      {" "}
+                      {trip.rating}
+                      <IconContext.Provider
+                        value={{
+                          color: "yellow",
+                          size: "1.2rem",
+                        }}>
+                        <MdOutlineStar />
+                      </IconContext.Provider>
+                    </span>
+                    <span className="text-muted fw-normal fs-6">ratings</span>
+                  </h5>
+                  <h6 class="card-subtitle py-3  text-muted ">
+                    {trip.category} | total seats {trip.totalSeats}
+                  </h6>
+                  <p className="py-3">
+                    <span className="card-text fs-3">
+                      {formatTimestamp(trip.startTime)}
+                      <small className="text-muted fs-6">
+                        {" "}
+                        ------
+                        {calculateDuration(trip.startTime, trip.endTime)} ------
+                      </small>{" "}
+                      {formatTimestamp(trip.endTime)}
+                    </span>
+                  </p>
+                </div>
+                <div class="">
+                  <div className="my-3 fs-5">Trip Cost</div>
+                  <div className="text-muted" style={{ fontSize: "10px" }}>
+                    Per Ticket Price
+                  </div>
+                  <h2 className="fw-bold">₹{trip.busFare}</h2>
+                  <button
+                    className="btn my-3 px-4 text-light "
+                    style={{ backgroundColor: "rgb(202, 112, 7)" }}>
+                    View Seat
+                  </button>
+                </div>
+              </div>
+              <span className="d-flex flex-fill fw-normal text-primary">
+                {trip?.amenities?.map((amenity) => (
+                  <li className="d-flex mx-3" key={amenity}>
+                    {amenity}
+                  </li>
+                ))}
               </span>
-            </h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
+            </div>
           </div>
-        </div>
-        ;
+        ))}
       </div>
     </div>
   );

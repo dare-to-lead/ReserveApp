@@ -32,6 +32,21 @@ const tripsSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  busOperator: {
+    type: String,
+  },
+  category: {
+    type: String,
+  },
+  totalSeats: {
+    type: Number,
+  },
+  amenities: {
+    type: [String],
+  },
+  rating: {
+    type: Number,
+  },
 });
 
 const Trips = mongoose.model("Trips", tripsSchema);
