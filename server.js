@@ -2,8 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const tripsRoutes = require("./backend/routes/tripsRoute");
 const stateDistrictRoutes = require("./backend/routes/stateDistrictRoute");
+
+const tripsRoutes = require("./backend/routes/tripsRoute");
 const ticketBookingRoutes = require("./backend/routes/ticketBookingRoute");
 const busDetailRoutes = require("./backend/routes/busDetailRoute");
 const bodyParser = require("body-parser");
@@ -24,8 +25,8 @@ db.on("error", (err) => console.log(err));
 db.once("open", () => console.log("connected to database"));
 
 // Routes
-app.use("/redbus", tripsRoutes);
 app.use("/redbus", stateDistrictRoutes);
+app.use("/redbus", tripsRoutes);
 app.use("/redbus", ticketBookingRoutes);
 app.use("/redbus", busDetailRoutes);
 

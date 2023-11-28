@@ -1,34 +1,29 @@
+import axios from "axios";
 import {
-  FETCH_DATA_FAILURE,
-  FETCH_DATA_REQUEST,
-  FETCH_DATA_SUCCESS,
+  FETCH_TRIPS_REQUEST,
+  FETCH_TRIPS_SUCCESS,
+  FETCH_TRIPS_FAILURE,
 } from "../actionType";
 
-export const fetchData = () => {
+export const fetchTrips = (filters) => {
   return async (dispatch) => {
-    dispatch({ type: FETCH_DATA_REQUEST });
+    dispatch({ type: FETCH_TRIPS_REQUEST });
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/redbus/trips`
-        /*,{ "trip":"655884c8b099c56258d0104a",
-        "passengerName":"Anjum",
-        "seatNumber":5,
-        "contactNumber": 9876543239,
-        "email":"nhz@kjf.com"}*/
-      );
-      const data = await response.json();
+      const response = await axios.get(`http://localhost:8080/redbus/trips`, {
+        params: filters,
+      });
 
-      console.log("api testing", data);
+      console.log("Trips API testing", response.data);
 
       dispatch({
-        type: FETCH_DATA_SUCCESS,
-        payload: data,
+        type: FETCH_TRIPS_SUCCESS,
+        payload: response.data,
       });
     } catch (error) {
       const errorMsg = error.message;
       dispatch({
-        type: FETCH_DATA_FAILURE,
+        type: FETCH_TRIPS_FAILURE,
         payload: errorMsg,
       });
     }

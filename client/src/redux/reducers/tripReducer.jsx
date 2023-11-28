@@ -1,9 +1,7 @@
-// reducers/dataReducer.js
-
 import {
-  FETCH_DATA_REQUEST,
-  FETCH_DATA_SUCCESS,
-  FETCH_DATA_FAILURE,
+  FETCH_TRIPS_REQUEST,
+  FETCH_TRIPS_SUCCESS,
+  FETCH_TRIPS_FAILURE,
 } from "../actionType";
 
 const initialState = {
@@ -12,17 +10,17 @@ const initialState = {
   error: null,
 };
 
-const dataReducer = (state = initialState, action) => {
+const tripReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_DATA_REQUEST:
+    case FETCH_TRIPS_REQUEST:
       return { ...state, loading: true };
-    case FETCH_DATA_SUCCESS:
+    case FETCH_TRIPS_SUCCESS:
       return { ...state, loading: false, data: action.payload, error: null };
-    case FETCH_DATA_FAILURE:
+    case FETCH_TRIPS_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export default dataReducer;
+export default tripReducer;

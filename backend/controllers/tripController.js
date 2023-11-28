@@ -1,6 +1,7 @@
 // tripsController.js
 const BusDetails = require("../models/busDetailsModel");
 const Trips = require("../models/tripsModel");
+const State = require("../models/stateDistrictModel");
 
 //create or post a trip
 exports.createTrip = async (req, res) => {
@@ -38,34 +39,88 @@ exports.createTrip = async (req, res) => {
 //get all trips
 
 exports.getTrips = async (req, res) => {
+  const { date, rating, from, to } = req.query;
+  console.log(req.params);
+
   try {
-    let query = { ...req.query };
+    const filter = {};
 
-    // Removing some fields for category
-    const removeFields = ["page", "limit"];
+    if (date) {
+      filter.date = Date.parse(date);
+    }
 
-    removeFields.forEach((item) => delete query[item]);
+    if (rating) {
+      filter.rating = { $gte: +rating };
+    }
 
-    // Pagination
+    if (from) {
+      const fromDistrict = await State.findOne(
+        { "districts.name": from },
+        { "districts.$": 1 }
+      );
 
-    let page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 4;
-    const skip = (page - 1) * limit;
-
-    const tripsQuery = Trips.find(query).skip(skip).limit(limit);
-
-    if (req.query.page) {
-      const totalTripsCount = await Trips.countDocuments(query);
-
-      if (skip >= totalTripsCount) {
-        page = 1;
+      if (
+        fromDistrict &&
+        fromDistrict.districts &&
+        fromDistrict.districts.length > 0
+      ) {
+        filter.from = fromDistrict.districts[0]._id;
+      } else {
+        console.log('District not found for "from" location');
       }
     }
 
-    const trips = await tripsQuery.exec();
-    res.status(200).json({ trips });
+    if (to) {
+      const toDistrict = await State.findOne(
+        { "districts.name": to },
+        { "districts.$": 1 }
+      );
+
+      if (
+        toDistrict &&
+        toDistrict.districts &&
+        toDistrict.districts.length > 0
+      ) {
+        filter.to = toDistrict.districts[0]._id;
+      } else {
+        console.log('District not found for "to" location');
+      }
+    }
+    // console.log(filter);
+    const trips = await Trips.find(filter).limit(50);
+    res.status(200).json(trips);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error:", error.message);
+    res.status(500).json({ message: error.message });
   }
+  // try {
+  //   let query = { ...req.query };
+
+  //   // Removing some fields for category
+  //   const removeFields = ["page", "limit"];
+
+  //   removeFields.forEach((item) => delete query[item]);
+
+  //   // Pagination
+
+  //   let page = req.query.page * 1 || 1;
+  //   const limit = req.query.limit * 1 || 4;
+  //   const skip = (page - 1) * limit;
+
+  //   const tripsQuery = Trips.find(query).skip(skip).limit(limit);
+
+  //   if (req.query.page) {
+  //     const totalTripsCount = await Trips.countDocuments(query);
+
+  //     if (skip >= totalTripsCount) {
+  //       page = 1;
+  //     }
+  //   }
+
+  //   const trips = await tripsQuery.exec();
+  //   res.status(200).json({ trips });
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ error: "Internal Server Error" });
+  // }
 };

@@ -10,14 +10,14 @@ const ReviewCards = () => {
       review: "4.4",
     },
     {
-      id: 1,
+      id: 2,
       name: "Vanya Agarval",
       year: 2019,
       img: "https://play-lh.googleusercontent.com/7Ak4Ye7wNUtheIvSKnVgGL_OIZWjGPZNV6TP_3XLxHC-sDHLSE45aDg41dFNmL5COA",
       review: "4.5",
     },
     {
-      id: 1,
+      id: 3,
       name: "Seema Agarval",
       year: 2018,
       img: "https://blush-design.imgix.net/collections/rChdrB8vX8xQJunpDPp8/v16/Master/Avataaar/cropped/Default.svg?w=500&auto=compress&cs=srgb",
@@ -29,10 +29,13 @@ const ReviewCards = () => {
       <h1 className="text-center mt-5 fw-bold">
         Here is what a few of our customers have to say about us
       </h1>
-      <div class="d-flex flex-md-row flex-sm-column justify-content-center align-items-center">
+      <div className="d-flex flex-md-row flex-sm-column justify-content-center align-items-center">
         {reviewData.map((item) => {
           return (
-            <div class="card p-5 m-5 " style={{ width: "250px" }}>
+            <div
+              className="card p-5 m-5 "
+              style={{ width: "250px" }}
+              key={item.id}>
               <div className="d-flex ">
                 <div className="rounded-circle border-2 ">
                   <img
