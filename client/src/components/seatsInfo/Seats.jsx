@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import seatImage from "../assets/seat.png";
+import seatImage from "../../assets/seat.png";
 const Seat = () => {
   // console.log("item", item)
 

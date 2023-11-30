@@ -23,56 +23,78 @@ exports.getDistrictById = async (req, res) => {
 };
 
 exports.getAllDistricts = async (req, res) => {
-  const { query } = req.query;
   try {
-    const matchingDistricts = await State.aggregate([
+    const allDistricts = await State.aggregate([
       {
         $unwind: "$districts",
       },
       {
-        $match: {
-          "districts.name": { $regex: new RegExp(query, "i") },
-        },
-      },
-      {
-        $addFields: {
-          isStartsWithQuery: {
-            $eq: [{ $substrCP: ["$districts.name", 0, query.length] }, query],
-          },
-        },
-      },
-      {
-        $sort: {
-          isStartsWithQuery: -1,
-        },
-      },
-      {
-        $limit: 10,
-      },
-      {
         $group: {
-          _id: null,
+          _id: "$state",
           districts: {
             $push: {
-              id: "$districts._id",
-              district: "$districts.name",
-              state: "$state",
+              _id: "$districts._id",
+              name: "$districts.name",
             },
           },
         },
       },
-      {
-        $project: {
-          _id: 0,
-          districts: 1,
-        },
-      },
     ]);
-    res.json(matchingDistricts[0]?.districts || []);
+
+    res.json(allDistricts);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
-};
 
-// router.get("/stateDistricts/", stateDistrictController.getAllDistricts);
+  // const { query } = req.query;
+  // try {
+  //   const matchingDistricts = await State.aggregate([
+  //     {
+  //       $unwind: "$districts",
+  //     },
+  //     {
+  //       $match: {
+  //         "districts.name": { $regex: new RegExp(query, "i") },
+  //       },
+  //     },
+  //     {
+  //       $addFields: {
+  //         isStartsWithQuery: {
+  //           $eq: [{ $substrCP: ["$districts.name", 0, query.length] }, query],
+  //         },
+  //       },
+  //     },
+  //     {
+  //       $sort: {
+  //         isStartsWithQuery: -1,
+  //       },
+  //     },
+  //     {
+  //       $limit: 10,
+  //     },
+  //     {
+  //       $group: {
+  //         _id: null,
+  //         districts: {
+  //           $push: {
+  //             id: "$districts._id",
+  //             district: "$districts.name",
+  //             state: "$state",
+  //           },
+  //         },
+  //       },
+  //     },
+  //     {
+  //       $project: {
+  //         _id: 0,
+  //         districts: 1,
+  //       },
+  //     },
+  //   ]);
+  //   res.json(matchingDistricts[0]?.districts || []);
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).send("Internal Server Error");
+  // }
+};

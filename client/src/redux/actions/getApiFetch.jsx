@@ -6,13 +6,14 @@ import {
 } from "../actionType";
 
 export const fetchTrips = (filters) => {
+  console.log("filter", filters);
   return async (dispatch) => {
     dispatch({ type: FETCH_TRIPS_REQUEST });
 
     try {
-      const response = await axios.get(`http://localhost:8080/redbus/trips`, {
-        params: filters,
-      });
+      const response = await axios.get(
+        `http://localhost:8080/redbus/trips?${filters && filters}`
+      );
 
       console.log("Trips API testing", response.data);
 

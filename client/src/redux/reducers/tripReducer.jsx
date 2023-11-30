@@ -11,6 +11,7 @@ const initialState = {
 };
 
 const tripReducer = (state = initialState, action) => {
+  console.log("red", action.payload);
   switch (action.type) {
     case FETCH_TRIPS_REQUEST:
       return { ...state, loading: true };

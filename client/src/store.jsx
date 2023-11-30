@@ -6,7 +6,7 @@ import districtReducer from "./redux/reducers/districtReducer";
 
 const rootReducer = combineReducers({
   data: tripReducer,
-  districts: districtReducer,
+  districtsData: districtReducer,
 
   // Other reducers can be added here
 });

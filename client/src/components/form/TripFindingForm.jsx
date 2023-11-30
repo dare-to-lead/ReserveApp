@@ -1,80 +1,215 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { fetchAllDistrictsName } from "../../redux/actions/getDistrictApi";
+import { fetchAllDistrictsName } from "../../redux/actions/getDistrictApi";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTrips } from "../../redux/actions/getApiFetch";
 
-const TripFindingForm = ({ setFilters }) => {
+// export default function Form() {
+//   const [arr, setArr] = useState([
+//     { name: "mumbai", id: 1 },
+//     { name: "muhaha", id: 2 },
+//     { name: "muddhd", id: 3 },
+//     { name: "puna", id: 4 },
+//     { name: "panvel", id: 5 },
+//     { name: "rajas", id: 6 },
+//     { name: "rajeshpur", id: 7 },
+//     { name: "ravind", id: 8 },
+//   ]);
+//   const [filterFromArray, setFilterFromArray] = useState([]);
+//   const [filterToArray, setFilterToArray] = useState([]);
+//   const [pform, setPForm] = useState({
+//     from: "",
+//     to: "",
+//   });
+//   const [form, setForm] = useState({
+//     from: "",
+//     to: "",
+//   });
+
+//   function handleFromChange(e) {
+//     const filterData = arr.filter((item) => item.name.includes(e.target.value));
+//     setFilterFromArray(filterData);
+//     setForm((prev) => ({
+//       ...prev,
+//       from: e.target.value,
+//     }));
+//   }
+
+//   function handleToChange(e) {
+//     const filterData = arr.filter((item) => item.name.includes(e.target.value));
+//     setFilterToArray(filterData);
+//     setForm((prev) => ({
+//       ...prev,
+//       to: e.target.value,
+//     }));
+//   }
+
+//   function handleFromClick(item) {
+//     setPForm((prev) => ({
+//       ...prev,
+//       from: item,
+//     }));
+//   }
+
+//   function handleToClick(item) {
+//     setPForm((prev) => ({
+//       ...prev,
+//       to: item,
+//     }));
+//   }
+//   function handleClickSubmit() {
+//     const data = fetch("https://jsonplaceholder.typicode.com/todos/1")
+//       .then((response) => response.json())
+//       .then((json) => console.log(json));
+//     dispatch(gettripdata(pform));
+//   }
+//   return (
+//     <>
+//       <label>
+//         From:
+//         <input value={form.from} onChange={(e) => handleFromChange(e)} />
+//       </label>
+//       <ul>
+//         {filterFromArray.length > 0 &&
+//           filterFromArray.map((item, index) => {
+//             return (
+//               <li key={index} onClick={() => handleFromClick(item.id)}>
+//                 {item.name}
+//               </li>
+//             );
+//           })}
+//       </ul>
+//       <label>
+//         to:
+//         <input value={form.to} onChange={(e) => handleToChange(e)} />
+//       </label>
+//       <ul>
+//         {filterToArray.length > 0 &&
+//           filterToArray.map((item, index) => {
+//             return (
+//               <li key={index} onClick={() => handleToClick(item.id)}>
+//                 {item.name}
+//               </li>
+//             );
+//           })}
+//       </ul>
+
+//       <button onClick={handleClickSubmit}>submit</button>
+//     </>
+//   );
+// }
+
+const TripFindingForm = () => {
   const navigate = useNavigate();
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
+  const [origin, setOrigin] = useState([]);
+  const [destination, setDestination] = useState([]);
   const [date, setDate] = useState("");
-  const [originSuggestions, setOriginSuggestions] = useState([]);
-  const [destinationSuggestions, setDestinationSuggestions] = useState([]);
-  const [originSuggestionsVisible, setOriginSuggestionsVisible] =
-    useState(true);
-  const [destinationSuggestionsVisible, setDestinationSuggestionsVisible] =
-    useState(true);
-  const [originId, setOriginId] = useState("");
-  const [destinationId, setDestinationId] = useState("");
-  console.log(origin);
-  // console.log("originId", districtId);
+  const [nameForm, setNameForm] = useState({
+    from: "",
+    to: "",
+  });
+  const [idForm, setIdForm] = useState({
+    from: "",
+    to: "",
+  });
 
-  const getDistrictApi = async (input, setSuggestions, setDistrictId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/redbus/stateDistricts?query=${input}`
+  console.log("name", nameForm);
+  console.log("id", idForm);
+
+  const data = useSelector((state) => state.districtsData);
+  const tripdata = useSelector((state) => state.data);
+  const result = data.data;
+  // const flatten = result?.flatMap((items) => items);
+
+  // console.log("data", flatten);
+  const dispatch = useDispatch();
+
+  function handleOriginChange(e) {
+    e.preventDefault();
+
+    const inputValue = e.target.value.trim();
+
+    if (inputValue === "" || inputValue === null) {
+      setOrigin([]);
+    } else {
+      const flatten = result?.flatMap((items) => items);
+      const filter = flatten?.filter((hg) =>
+        hg.name.toLowerCase().includes(inputValue.toLowerCase())
       );
-      console.log("dis", response.data);
-      const suggestions = response.data.map((district) => district.district);
-      const districtId = response.data.map((district) => district.id);
-      console.log(districtId);
-      // console.log("ids", ids);
-      setDistrictId(districtId);
-      setSuggestions(suggestions);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleSelectSuggestion = (
-    suggestion,
-    setInput,
-    setSuggestions,
-    setVisibility,
-    setDistrictId
-  ) => {
-    setInput(suggestion);
-    setSuggestions([]);
-    setVisibility(false);
-    setDistrictId({});
-  };
 
-  const handleChangeOrigin = (e) => {
+      setOrigin(filter);
+    }
+    setNameForm((prev) => ({
+      ...prev,
+      from: inputValue,
+    }));
+  }
+
+  function handleDestinationChange(e) {
     e.preventDefault();
-    setOrigin(e.target.value);
-  };
+    const inputValue = e.target.value.trim();
+    if (inputValue === "" || inputValue === null) {
+      setDestination([]);
+    } else {
+      const flatten = result?.flatMap((items) => items);
+      const filter = flatten?.filter((hg) =>
+        hg.name.toLowerCase().includes(inputValue.toLowerCase())
+      );
 
-  const handleChangeDestination = (e) => {
-    e.preventDefault();
-    setDestination(e.target.value);
-  };
-
-  useEffect(() => {
-    if (origin) {
-      getDistrictApi(origin, setOriginSuggestions, setOriginId);
+      setDestination(filter);
     }
-  }, [origin]);
+    setNameForm((prev) => ({
+      ...prev,
+      to: inputValue,
+    }));
+  }
 
-  useEffect(() => {
-    if (destination) {
-      getDistrictApi(destination, setDestinationSuggestions, setDestinationId);
-    }
-  }, [destination]);
+  function handleOriginClick(item) {
+    setIdForm((prev) => ({
+      ...prev,
+      from: item._id,
+    }));
+    setNameForm((prev) => ({
+      ...prev,
+      from: item.name,
+    }));
 
-  const handleSearch = () => {
-    setFilters((prev) => ({ ...prev, originId, destinationId }));
+    setOrigin([]);
+  }
+
+  function handleDestinationClick(item) {
+    setIdForm((prev) => ({
+      ...prev,
+      to: item._id,
+    }));
+    setNameForm((prev) => ({
+      ...prev,
+      to: item.name,
+    }));
+
+    setDestination([]);
+  }
+
+  function handleClickSubmit() {
+    console.log("Submitting form with the following data:");
+    console.log("Origin:", nameForm.from, "ID:", idForm.from);
+    console.log("Destination:", nameForm.to, "ID:", idForm.to);
+
+    const queryString = new URLSearchParams(idForm).toString();
+    console.log("query", queryString);
+
+    dispatch(fetchTrips(queryString));
+    console.log("trip", tripdata);
+
     navigate("/trips");
-  };
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(fetchAllDistrictsName());
+    }, 200);
+  }, [nameForm]);
 
   return (
     <div
@@ -89,10 +224,8 @@ const TripFindingForm = ({ setFilters }) => {
             <input
               id="origin"
               type="search"
-              onChange={handleChangeOrigin}
-              value={origin}
-              onBlur={() => setOriginSuggestionsVisible(false)}
-              onFocus={() => setOriginSuggestionsVisible(true)}
+              value={nameForm.from}
+              onChange={(e) => handleOriginChange(e)}
               className="form-control"
               aria-label="Text input with dropdown button"
               style={{
@@ -102,24 +235,14 @@ const TripFindingForm = ({ setFilters }) => {
             />
           </div>
           <ul className="bg-light">
-            {originSuggestions &&
-              originSuggestions.length > 0 &&
-              originSuggestions.map((suggestion, index) => (
-                <li
-                  className="dropdown-item"
-                  key={index}
-                  onClick={() =>
-                    handleSelectSuggestion(
-                      suggestion,
-                      setOrigin,
-                      setOriginSuggestions,
-                      setOriginSuggestionsVisible,
-                      setOriginId
-                    )
-                  }>
-                  {suggestion}
-                </li>
-              ))}
+            {origin.length > 0 &&
+              origin.map((item, index) => {
+                return (
+                  <li key={index} onClick={() => handleOriginClick(item)}>
+                    {item.name}
+                  </li>
+                );
+              })}
           </ul>
         </div>
         <div className="mb-3 w-75 ">
@@ -130,10 +253,8 @@ const TripFindingForm = ({ setFilters }) => {
             <input
               id="destination"
               type="search"
-              onChange={handleChangeDestination}
-              value={destination}
-              onBlur={() => setDestinationSuggestionsVisible(false)}
-              onFocus={() => setDestinationSuggestionsVisible(true)}
+              onChange={(e) => handleDestinationChange(e)}
+              value={nameForm.to}
               className="form-control"
               aria-label="Text input with dropdown button"
               style={{
@@ -142,25 +263,18 @@ const TripFindingForm = ({ setFilters }) => {
               }}
             />
           </div>
-          <ul className="bg-light ">
-            {destinationSuggestions &&
-              destinationSuggestions.length > 0 &&
-              destinationSuggestions.map((suggestion, index) => (
-                <li
-                  className="dropdown-item"
-                  key={index}
-                  onClick={() =>
-                    handleSelectSuggestion(
-                      suggestion,
-                      setDestination,
-                      setDestinationSuggestions,
-                      setDestinationSuggestionsVisible,
-                      setDestinationId
-                    )
-                  }>
-                  {suggestion}
-                </li>
-              ))}
+          <ul className="bg-light w-25 h-auto">
+            {destination.length > 0 &&
+              destination.map((item, index) => {
+                return (
+                  <li
+                    className="drop-dropdown-item"
+                    key={index}
+                    onClick={() => handleDestinationClick(item)}>
+                    {item.name}
+                  </li>
+                );
+              })}
           </ul>
         </div>
         <div className="mb-3 w-75">
@@ -187,7 +301,7 @@ const TripFindingForm = ({ setFilters }) => {
           <button
             type="submit"
             className="btn btn-secondary py-3 px-5 fs-4"
-            onClick={handleSearch}>
+            onClick={handleClickSubmit}>
             Search Trips
           </button>
         </div>
