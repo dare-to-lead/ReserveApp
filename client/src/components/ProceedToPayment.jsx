@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const PayementProceed = ({ place1, place2 }) => {
+const PayementProceed = () => {
   return (
-    <div class="col-lg-4 col-sm-12 border border-1 mx-2 p-2 rounded mb-3 shadow">
+    <div class="col-lg-12 col-sm-12 border border-1 mx-2 p-2 rounded mb-3 shadow bg-light ">
       <small className="fw-bold">Boarding and Dropping</small>
       <div className="d-flex justify-content-center  align-items-center">
         <div className="flex-grow-1 my-2">
@@ -59,7 +59,8 @@ const PayementProceed = ({ place1, place2 }) => {
       </div>
       <Link
         to="/CustomerDetails"
-        className="btn btn-warning rounded fw-bold text-white w-100 mt-3">
+        style={{ backgroundColor: "rgb(202, 112, 7)" }}
+        className="btn  rounded fw-bold text-white w-100 mt-3">
         Proceed to Payment
       </Link>
     </div>

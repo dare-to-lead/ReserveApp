@@ -25,7 +25,7 @@ const tripsSchema = new mongoose.Schema({
     required: true,
   },
   seatBooked: {
-    type: [],
+    type: [String],
     required: true,
   },
   busFare: {

@@ -15,7 +15,7 @@ export const fetchTrips = (filters) => {
         `http://localhost:8080/redbus/trips?${filters && filters}`
       );
 
-      console.log("Trips API testing", response.data);
+      // console.log("Trips API testing", response.data);
 
       dispatch({
         type: FETCH_TRIPS_SUCCESS,

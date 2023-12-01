@@ -15,7 +15,7 @@ export const fetchAllDistrictsName = () => {
       const data = await response.json();
       let result = data.map((items) => items.districts);
 
-      console.log("Districts API testing", result);
+      // console.log("Districts API testing", result);
 
       dispatch({
         type: FETCH_DISTRICTS_SUCCESS,

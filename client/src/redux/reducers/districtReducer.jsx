@@ -17,7 +17,6 @@ const districtReducer = (state = initialState, action) => {
     case FETCH_DISTRICTS_REQUEST:
       return { ...state, loading: true };
     case FETCH_DISTRICTS_SUCCESS:
-      console.log("Districts success action payload:", action.payload);
       return { ...state, loading: false, data: action.payload, error: null };
     case FETCH_DISTRICTS_FAILURE:
       return { ...state, loading: false, error: action.payload };
