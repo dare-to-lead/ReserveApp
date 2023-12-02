@@ -4,7 +4,7 @@ const Trips = require("../models/tripsModel");
 exports.bookTicket = async (req, res) => {
   try {
     const { trip, passengerName, seatNumber, contactNumber, email } = req.body;
-
+    console.log(req.body);
     // Populate the trip details (date, startTime, endTime) from the referenced Trips document
     const populatedTrip = await Trips.findById(trip).exec();
 

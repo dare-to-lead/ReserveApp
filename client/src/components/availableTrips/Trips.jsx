@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IconContext } from "react-icons/lib";
 import { MdOutlineStar } from "react-icons/md";
-import { RiRectangleFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import BusSeats from "../seatsInfo/BusSeats";
-import PayementProceed from "../ProceedToPayment";
 import TripFilters from "./TripFilters";
 // import seatDataDetail from "../seatsInfo/SeatData";
 
@@ -170,32 +168,13 @@ const Filter = () => {
                   </span>
                 </div>
                 {showSeatSelection && (
-                  <div>
+                  <>
                     <h3 className="fw-bold m-3">Select Seat</h3>
 
                     <div className="d-flex justify-content-around ">
-                      <BusSeats seatBooked={trip.seatBooked} />
-                      <div className="d-flex flex-column">
-                        <div className="p-3 rounded shadow">
-                          <div className="d-flex">
-                            <RiRectangleFill className="text-light border" />
-                            <span>Available Seat</span>
-                          </div>
-                          <div className="d-flex">
-                            <RiRectangleFill className="text-primary" />
-                            <span>selected Seats</span>
-                          </div>
-                          <div className="d-flex">
-                            <RiRectangleFill className="secondary" />
-                            <span>Unavilable Seat</span>
-                          </div>
-                        </div>
-                        <div>
-                          <PayementProceed />
-                        </div>
-                      </div>
+                      <BusSeats seatBooked={trip.seatBooked} trip={trip} />
                     </div>
-                  </div>
+                  </>
                 )}
               </div>
             ))
