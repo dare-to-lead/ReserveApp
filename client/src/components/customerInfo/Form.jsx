@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postTicketDetails } from "../../redux/actions/postTicketBooking";
+import { useNavigate } from "react-router-dom";
 
 const Form = () => {
+  const navigate = useNavigate();
   const trip = useSelector((state) => state.ticketTripDetail);
+  console.log("tickettrip", trip);
+  const seatNumber = trip.tobookSeat;
+  console.log("seatnumber", seatNumber);
 
   //   {
   //     "trip":"6568d4723efef197e5bb842e",
@@ -40,18 +45,17 @@ const Form = () => {
       Genger: gender,
       MobileNo: mobileNo,
     });
-    await alert("Successfully Submitted");
+    navigate("/confirmation");
     dispatch(
       postTicketDetails({
         trip: trip._id,
         passengerName: fname,
-        seatNumber: 5,
+        seatNumber: seatNumber,
         contactNumber: mobileNo,
         email: emailId,
       })
     );
   };
-  //   getForm(dispatch, formValue);
 
   return (
     <div
@@ -59,6 +63,7 @@ const Form = () => {
       style={{ border: "2px solid rgb(202, 112, 7)" }}>
       <form
         className="row g-3 needs-validation"
+        id="userInfo"
         onSubmit={handleSubmit}
         noValidate>
         <div className="col-md-4">

@@ -9,9 +9,8 @@ const Seat = ({ onClick, bg }) => {
         id="li"
         onClick={onClick}
         src={seatImage}
-        className="border border-1 text-center rounded"
+        className="border border-1 text-center rounded w-75 "
         style={{
-          width: "55px",
           backgroundColor: bg,
         }}
       />

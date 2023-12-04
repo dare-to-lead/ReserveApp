@@ -117,10 +117,10 @@ const TripFindingForm = () => {
 
   return (
     <div
-      className="container-fluid rounded w-50 h-75 mt-5 "
+      className="container-fluid rounded  mt-5 absolute w-75"
       style={{ backgroundColor: "rgb(242, 229, 220)" }}>
       <form className="d-flex flex-column align-items-center">
-        <div className="mb-3 w-75 mt-3 ">
+        <div className="mb-3 w-75 mt-3">
           <label htmlFor="origin" className="mb-3 fs-5">
             Origin
           </label>
@@ -138,11 +138,14 @@ const TripFindingForm = () => {
               }}
             />
           </div>
-          <ul className="bg-light">
+          <ul className="list-group bg-light">
             {origin.length > 0 &&
-              origin.map((item, index) => {
+              origin.slice(0, 10).map((item, index) => {
                 return (
-                  <li key={index} onClick={() => handleOriginClick(item)}>
+                  <li
+                    key={index}
+                    className="list-group-item"
+                    onClick={() => handleOriginClick(item)}>
                     {item.name}
                   </li>
                 );
@@ -167,13 +170,13 @@ const TripFindingForm = () => {
               }}
             />
           </div>
-          <ul className="bg-light w-25 h-auto">
+          <ul className="list-group bg-light">
             {destination.length > 0 &&
-              destination.map((item, index) => {
+              destination.slice(0, 10).map((item, index) => {
                 return (
                   <li
-                    className="drop-dropdown-item"
                     key={index}
+                    className="list-group-item"
                     onClick={() => handleDestinationClick(item)}>
                     {item.name}
                   </li>
@@ -204,7 +207,7 @@ const TripFindingForm = () => {
         <div className="d-grid col-8 mt-4 ">
           <button
             type="submit"
-            className="btn btn-secondary py-3 px-5 fs-4"
+            className="btn btn-secondary my-lg-3 my-md-2  px-5 fs-4"
             onClick={handleClickSubmit}>
             Search Trips
           </button>

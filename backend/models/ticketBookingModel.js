@@ -11,7 +11,7 @@ const ticketBookingSchema = new mongoose.Schema({
     required: true,
   },
   seatNumber: {
-    type: Number,
+    type: [String],
     required: true,
   },
   contactNumber: {

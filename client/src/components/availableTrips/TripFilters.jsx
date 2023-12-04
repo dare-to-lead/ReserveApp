@@ -2,10 +2,10 @@ import React from "react";
 
 const TripFilters = () => {
   return (
-    <div className="col-3 pt-4">
+    <div className="col-lg-3 col-md-3 col-12 pt-4">
       <div>
         <button
-          className="mx-5 mt-4 py-2 bg-light rounded "
+          className="mx-lg-5 mx-md-2 mx-sm-2 mt-4 py-2 bg-light rounded "
           style={{
             width: "15.8rem",
             border: "2px solid rgb(202, 112, 7)",
@@ -15,7 +15,7 @@ const TripFilters = () => {
       </div>
       <div>
         <div
-          className="card mx-5 mt-lg-4 ps-3"
+          className="card mx-lg-5 mx-md-2 mx-sm-2  mt-lg-4 ps-3"
           style={{
             width: "15.8rem",
             border: "2px solid rgb(202, 112, 7)",

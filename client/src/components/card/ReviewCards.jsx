@@ -24,23 +24,22 @@ const ReviewCards = () => {
       review: "4.7",
     },
   ];
+
   return (
-    <div className="container-fluid my-5 w-100">
+    <div className="container my-5">
       <h1 className="text-center mt-5 fw-bold">
         Here is what a few of our customers have to say about us
       </h1>
-      <div className="d-flex flex-md-row flex-sm-column justify-content-center align-items-center">
-        {reviewData.map((item) => {
-          return (
-            <div
-              className="card p-5 m-5 "
-              style={{ width: "250px" }}
-              key={item.id}>
+      <div className="row justify-content-center">
+        {reviewData.map((item) => (
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={item.id}>
+            <div className="card p-5 m-5">
               <div className="d-flex ">
                 <div className="rounded-circle border-2 ">
                   <img
                     style={{ width: "3rem", height: "3rem" }}
                     src={item.img}
+                    alt={item.name}
                   />
                 </div>
                 <div className="d-flex flex-column mx-3">
@@ -60,11 +59,11 @@ const ReviewCards = () => {
                 </i>
               </small>
               <small>
-                Awesome travel experience with reserve. Excelent staff
+                Awesome travel experience with reserve. Excellent staff
               </small>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

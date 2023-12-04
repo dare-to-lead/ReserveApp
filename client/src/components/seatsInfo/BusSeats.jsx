@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Seat from "./Seats";
-import PayementProceed from "./ProceedToPayment";
+import ProceedToBook from "./ProceedToBook";
 import { RiRectangleFill } from "react-icons/ri";
 
 const BusSeats = ({ seatBooked, trip }) => {
@@ -41,8 +41,8 @@ const BusSeats = ({ seatBooked, trip }) => {
   };
 
   return (
-    <div className="d-flex col-lg-12 justify-content-around  ">
-      <div class="col-lg-6 col-sm-12 d-flex-column bg-light ">
+    <div className="d-lg-flex  col-lg-12 d-md-column d-sm-column justify-content-around  ">
+      <div className="col-lg-6 col-sm-12 d-flex-column bg-light ">
         <div className="border border-1 my-2 mb-5 shadow rounded">
           <div className="d-flex justify-content-between align-items-center">
             <div
@@ -136,7 +136,7 @@ const BusSeats = ({ seatBooked, trip }) => {
           </div>
         </div>
         <div>
-          <PayementProceed tobookSeat={tobookSeat} trip={trip} />
+          <ProceedToBook tobookSeat={tobookSeat} trip={trip} />
         </div>
       </div>
     </div>

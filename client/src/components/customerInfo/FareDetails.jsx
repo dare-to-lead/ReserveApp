@@ -1,12 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 const FareDetails = () => {
   const data = useSelector((state) => state.ticketTripDetail);
-  //   console.log(
-  //     "fare",
-  //     data.data.trips.map((item) => item.busFare)
-  //   );
   let busFare = data.busFare;
 
   let total = parseInt(busFare) * 3 + 150 - 50;
@@ -50,12 +46,6 @@ const FareDetails = () => {
           ₹{total}
         </div>
       </div>
-      <Link
-        to="/confirmation"
-        className="btn btn-warning rounded fw-bold text-white w-100 mt-1"
-        style={{ backgroundColor: "rgb(202, 112, 7)" }}>
-        Proceed to Payment
-      </Link>
     </div>
   );
 };

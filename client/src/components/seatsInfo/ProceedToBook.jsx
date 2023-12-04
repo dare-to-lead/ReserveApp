@@ -2,13 +2,13 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { tripInfo } from "../../redux/actions/postTicketBooking";
-import { ADD_TRIP_INFO } from "../../redux/actionType";
 
-const PayementProceed = ({ tobookSeat, trip }) => {
+const ProceedToBook = ({ tobookSeat, trip }) => {
   const dispatch = useDispatch();
   console.log("tobookseat", tobookSeat);
+  console.log("tripinfo", tripInfo);
   return (
-    <div class="col-lg-12 col-sm-12 border border-1 mx-2 p-2 rounded mb-3 shadow bg-light ">
+    <div className="col-lg-12 col-sm-12 border border-1 mx-2 p-2 rounded mb-3 shadow bg-light ">
       <small className="fw-bold">Your Trip Details</small>
       <div className="d-flex justify-content-center  align-items-center">
         <div className="flex-grow-1 my-2">
@@ -62,14 +62,15 @@ const PayementProceed = ({ tobookSeat, trip }) => {
         </div>
       </div>
       <Link
+        defaultValue={"userInfo"}
         to="/CustomerDetails"
         onClick={() => dispatch(tripInfo({ ...trip, tobookSeat }))}
         style={{ backgroundColor: "rgb(202, 112, 7)" }}
         className="btn  rounded fw-bold text-white w-100 mt-3">
-        Proceed to Payment
+        Proceed to Book
       </Link>
     </div>
   );
 };
 
-export default PayementProceed;
+export default ProceedToBook;
